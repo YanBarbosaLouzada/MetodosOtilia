@@ -8,6 +8,8 @@ def jacobi(A, b, x0, tol=1e-10, max_iter=1000):
         for i in range(n):
             sigma = sum(A[i][j] * x[j] for j in range(n) if j != i)
             x_new[i] = (b[i] - sigma) / A[i][i]
+            
+            print(f"Iteração {it + 1}: {x_new}")
         
         if np.linalg.norm(x_new - x, np.inf) < tol:
             return x_new, it + 1
