@@ -1,33 +1,38 @@
-def bisseccao(f, a, b, tol=1e-6):
-    """
-    Método da bissecção para encontrar raízes de uma função f no intervalo [a, b].
-    
-    Parâmetros:
-    f   - Função contínua f(x).
-    a   - Limite inferior do intervalo.
-    b   - Limite superior do intervalo.
-    tol - Tolerância para critério de parada.
-    
-    Retorno:
-    Aproximação da raiz da função.
-    """
-    if f(a) * f(b) >= 0:
-        raise ValueError("O método da bissecção requer que f(a) e f(b) tenham sinais opostos.")
+def f(x):
+    # Defina aqui a função para a qual deseja encontrar a raiz
+    return x**2 - 2  # Exemplo: f(x) = x^2 - 2 (raiz em x = sqrt(2))
 
-    while (b - a) / 2 > tol:
-        c = (a + b) / 2  # Calcula o ponto médio
-        if f(c) == 0:    # Se f(c) for exatamente zero, encontramos a raiz
+def bisseccao(a, b, precisao):
+    # Verifica se a função muda de sinal no intervalo [a, b]
+    if f(a) * f(b) > 0:
+        print("A função não muda de sinal no intervalo dado.")
+        return None
+    
+    # Inicializa o ponto médio
+    c = a
+    # Iterações do método da bisseção
+    while (b - a) / 2 > precisao:
+        # Calcula o ponto médio
+        c = (a + b) / 2
+        print(f"c = {c}, f(c) = {f(c)}")  # Exibe o ponto médio e o valor da função no ponto
+
+        # Verifica se encontramos a raiz
+        if f(c) == 0:
             return c
-        elif f(a) * f(c) < 0:
-            b = c  # A raiz está no intervalo [a, c]
-        else:
-            a = c  # A raiz está no intervalo [c, b]
+        
+        # Atualiza o intervalo [a, b] com base no sinal de f(c)
+        if f(c) * f(a) < 0:  # Se a raiz está entre a e c
+            b = c
+        else:  # Se a raiz está entre c e b
+            a = c
+    
+    return c
 
-    return (a + b) / 2  # Retorna a melhor aproximação da raiz
+# Entrada de dados pelo usuário
+a = float(input("Digite o valor de a: "))
+b = float(input("Digite o valor de b: "))
+precisao = float(input("Digite a precisão desejada: "))
 
-# Exemplo de uso:
-def funcao(x):
-    return x**2 - 2  # Queremos encontrar a raiz de x^2 - 2 = 0 (√2)
-
-raiz = bisseccao(funcao, 1, 2)
-print(f"A raiz aproximada é {raiz:.6f}")
+raiz = bisseccao(a, b, precisao)
+if raiz is not None:
+    print(f"A raiz aproximada é: {raiz}")

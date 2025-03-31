@@ -1,38 +1,36 @@
-def falsa_posicao(f, a, b, tol=1e-6, max_iter=100):
-    """
-    Método da falsa posição (Regula Falsi) para encontrar raízes de uma função f no intervalo [a, b].
-    
-    Parâmetros:
-    f        - Função contínua f(x).
-    a        - Limite inferior do intervalo.
-    b        - Limite superior do intervalo.
-    tol      - Tolerância para critério de parada.
-    max_iter - Número máximo de iterações.
-    
-    Retorno:
-    Aproximação da raiz da função.
-    """
-    if f(a) * f(b) >= 0:
-        raise ValueError("O método da falsa posição requer que f(a) e f(b) tenham sinais opostos.")
+def f(x):
+    # Defina aqui a função para a qual deseja encontrar a raiz
+    return x**2 - 2  # Exemplo: f(x) = x^2 - 2 (raiz em x = sqrt(2))
 
-    for _ in range(max_iter):
-        # Calcula o ponto c usando interpolação linear
+def falsa_posicao(a, b, precisao):
+    # Verifica se a função muda de sinal no intervalo [a, b]
+    if f(a) * f(b) > 0:
+        print("A função não muda de sinal no intervalo dado.")
+        return None
+    
+    c = a
+    while abs(f(c)) > precisao:  # Enquanto a precisão não for atingida
+        # Calcula o ponto c usando a fórmula da falsa posição
         c = (a * f(b) - b * f(a)) / (f(b) - f(a))
+        print(f"c = {c}, f(c) = {f(c)}")  # Exibe o ponto c e o valor da função em c
 
-        if abs(f(c)) < tol:  # Critério de parada
+        # Verifica se a raiz foi encontrada
+        if f(c) == 0:
             return c
-
-        # Ajusta o intervalo [a, b] baseado no sinal de f(c)
-        if f(a) * f(c) < 0:
+        
+        # Atualiza o intervalo [a, b]
+        if f(c) * f(a) < 0:  # Se a raiz está entre a e c
             b = c
-        else:
+        else:  # Se a raiz está entre c e b
             a = c
+    
+    return c
 
-    return c  # Retorna a melhor aproximação da raiz
+# Entrada de dados pelo usuário
+a = float(input("Digite o valor de a: "))
+b = float(input("Digite o valor de b: "))
+precisao = float(input("Digite a precisão desejada: "))
 
-# Exemplo de uso:
-def funcao(x):
-    return x**2 - 2  # Encontrando a raiz de x^2 - 2 = 0 (√2)
-
-raiz = falsa_posicao(funcao, 1, 2)
-print(f"A raiz aproximada é {raiz:.6f}")
+raiz = falsa_posicao(a, b, precisao)
+if raiz is not None:
+    print(f"A raiz aproximada é: {raiz}")
