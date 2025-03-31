@@ -29,7 +29,7 @@ def get_matrix_input():
 
     return np.array(A, dtype=float), np.array(b, dtype=float), np.zeros(n)
 
-if _name_ == "_main_":
+if __name__ == "__main__":
     A, b, x0 = get_matrix_input()
     
     x, iterations = seidel(A, b, x0)
