@@ -9,11 +9,12 @@ def falsa_posicao(a, b, precisao):
         return None
     
     c = a
+    passo = 1
     while abs(f(c)) > precisao:  # Enquanto a precisão não for atingida
         # Calcula o ponto c usando a fórmula da falsa posição
         c = (a * f(b) - b * f(a)) / (f(b) - f(a))
-        print(f"c = {c}, f(c) = {f(c)}")  # Exibe o ponto c e o valor da função em c
-
+        print(f"Passo {passo}: c = {c}, f(c) = {f(c)}")  # Exibe o ponto c e o valor da função em c
+        
         # Verifica se a raiz foi encontrada
         if f(c) == 0:
             return c
@@ -23,6 +24,8 @@ def falsa_posicao(a, b, precisao):
             b = c
         else:  # Se a raiz está entre c e b
             a = c
+        
+        passo += 1
     
     return c
 

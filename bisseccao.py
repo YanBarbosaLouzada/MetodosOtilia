@@ -10,12 +10,14 @@ def bisseccao(a, b, precisao):
     
     # Inicializa o ponto médio
     c = a
+    passo = 1
+    
     # Iterações do método da bisseção
     while (b - a) / 2 > precisao:
         # Calcula o ponto médio
         c = (a + b) / 2
-        print(f"c = {c}, f(c) = {f(c)}")  # Exibe o ponto médio e o valor da função no ponto
-
+        print(f"Passo {passo}: c = {c}, f(c) = {f(c)}")  # Exibe o ponto médio e o valor da função no ponto
+        
         # Verifica se encontramos a raiz
         if f(c) == 0:
             return c
@@ -25,6 +27,8 @@ def bisseccao(a, b, precisao):
             b = c
         else:  # Se a raiz está entre c e b
             a = c
+        
+        passo += 1
     
     return c
 

@@ -9,6 +9,7 @@ def seidel(A, b, x0, tol=1e-10, max_iter=1000):
             sigma = sum(A[i][j] * x_new[j] for j in range(n) if j != i)
             x_new[i] = (b[i] - sigma) / A[i][i]
         
+        x_new = np.round(x_new, 4)  # Arredonda para 3 casas decimais
         print(f"Iteração {it + 1}: {x_new}")  # Imprime as iterações
 
         if np.linalg.norm(x_new - x, np.inf) < tol:
